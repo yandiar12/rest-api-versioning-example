@@ -1,6 +1,6 @@
 # REST API SPRING BOOT WITH VERSIONING
 ```
-- VERSIONING API IN URL's
+- Versioning Using a URI Path
 - Spring Boot 3
 - Java 17
 ```
