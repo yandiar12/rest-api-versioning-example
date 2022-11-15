@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yandiar.api.models.Student;
@@ -18,19 +19,20 @@ import com.yandiar.api.service.StudentServiceV1;
 import jakarta.servlet.ServletException;
 
 @RestController
+@RequestMapping("v1/student")
 public class StudentControllerV1 {
     
     @Autowired
     private StudentServiceV1 studentServiceV1;
 
-    @GetMapping(value = "v1/student")
+    @GetMapping
     private ResponseEntity<?> getAll(
             ) throws ServletException {
         List<Student> lst = studentServiceV1.getAll();
         return new ResponseEntity<List<Student>>(lst, HttpStatus.OK);
     }
 
-    @PostMapping(value = "v1/student")
+    @PostMapping
     private ResponseEntity<?> setStudent(
             @RequestBody Student student
             ) throws ServletException {
@@ -38,7 +40,7 @@ public class StudentControllerV1 {
         return new ResponseEntity<List<Student>>(lst, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "v1/student/{id}")
+    @DeleteMapping("/{id}")
     private ResponseEntity<?> deleteStudent(
             @PathVariable int id
             ) throws ServletException {
