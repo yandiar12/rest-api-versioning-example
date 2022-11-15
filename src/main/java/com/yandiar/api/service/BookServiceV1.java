@@ -24,9 +24,32 @@ public class BookServiceV1 {
         return lstBook;
     }
 
+    public List<Book> getById(int id) {
+        List<Book> lst = new ArrayList<>();
+  
+        for (Book book : lstBook) {
+            if (book.getId() == id) {
+                lst.add(book);
+                break;
+            }
+        }
+        
+        return lst;
+    }
+
     public List<Book> addBook(Book book) {
 
         lstBook.add(book);
+        return lstBook;
+    }
+
+    public List<Book> deleteBook(int id) {
+        for (int i=0; i<lstBook.size(); i++) {
+            if (lstBook.get(i).getId() == id) {
+                lstBook.remove(i);
+                break;
+            }
+        }
         return lstBook;
     }
 }

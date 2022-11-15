@@ -39,4 +39,14 @@ public class StudentServiceV1 {
         lst.add(s);
         return lst;
     }
+
+    public List<Student> deleteStudent(int id) {
+        for (int i=0; i<lst.size(); i++) {
+            if (lst.get(i).getId() == id) {
+                lst.remove(i);
+                break;
+            }
+        }
+        return lst;
+    }
 }

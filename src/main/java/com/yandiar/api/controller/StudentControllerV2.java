@@ -17,20 +17,19 @@ import com.yandiar.api.service.StudentServiceV2;
 import jakarta.servlet.ServletException;
 
 @RestController
-@RequestMapping("v2")
 public class StudentControllerV2 {
     
     @Autowired
     private StudentServiceV2 studentServiceV2;
 
-    @GetMapping(value = "/student")
+    @GetMapping(value = "v2/student")
     private ResponseEntity<?> getAll(
             ) throws ServletException {
         List<StudentV2> lst = studentServiceV2.getAll();
         return new ResponseEntity<List<StudentV2>>(lst, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/student")
+    @PostMapping(value = "v2/student")
     private ResponseEntity<?> setStudent(
             @RequestBody StudentV2 student
             ) throws ServletException {
