@@ -2,6 +2,8 @@ package com.yandiar.api.controller;
 
 import java.util.List;
 
+import javax.servlet.ServletException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yandiar.api.models.Student;
 import com.yandiar.api.service.StudentServiceV1;
-
-import jakarta.servlet.ServletException;
 
 @RestController
 @RequestMapping("v1/student")
