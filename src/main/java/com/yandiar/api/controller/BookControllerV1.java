@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yandiar.api.models.Book;
 import com.yandiar.api.service.BookServiceV1;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("v1/books")
+@Api(value = "Books API", produces = MediaType.APPLICATION_JSON_VALUE, tags = {"Books"})
 public class BookControllerV1 {
     
     @Autowired
@@ -31,7 +36,7 @@ public class BookControllerV1 {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getBooks(@PathVariable int id) {
+    public ResponseEntity<?> getBookById(@PathVariable int id) {
 
         List<Book> lst = booService.getById(id);
         return new ResponseEntity<List<Book>>(lst, HttpStatus.OK);
