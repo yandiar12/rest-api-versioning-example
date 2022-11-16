@@ -20,12 +20,12 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 public class SpringFoxConfig {
-    @Bean
-    public Docket apiV1() {
+
+    private ArrayList<SecurityContext> securityContext() {
         SecurityReference securityReference = SecurityReference.builder()
-                        .reference("basicAuth")
-                        .scopes(new AuthorizationScope[0])
-                        .build();
+                .reference("basicAuth")
+                .scopes(new AuthorizationScope[0])
+                .build();
 
         ArrayList<SecurityReference> reference = new ArrayList<>(1);
         reference.add(securityReference);
@@ -33,70 +33,50 @@ public class SpringFoxConfig {
         ArrayList<SecurityContext> securityContexts = new ArrayList<>(1);
         securityContexts.add(SecurityContext.builder().securityReferences(reference).build());
 
-        ArrayList<SecurityScheme> auth = new ArrayList<>(1);
-        auth.add(new BasicAuth("basicAuth"));
-                
-        return new Docket(DocumentationType.SWAGGER_2)
-            .securitySchemes(auth)
-            .securityContexts(securityContexts)
-            .groupName("api-1.0")
-            .select()
-            .apis(RequestHandlerSelectors
-                .basePackage("com.yandiar.api.controller"))
-            .paths(PathSelectors.regex("/api/v1.*"))
-            .build().apiInfo(apiInfoV1());
+        return securityContexts;
     }
 
-    private ApiInfo apiInfoV1() {
-        return new ApiInfoBuilder().title("REST API SPRING BOOT")
-                .description("REST API SPRING BOOT")
-                .termsOfServiceUrl("iconpln.co.id")
-                .licenseUrl("iconpln.co.id")
-                .contact(new Contact("Icon Plus", "", "aaa.bbb@iconpln.co.id"))
-                .license("Icon+ License")
-                .version("1.0.0")
-                .build();
+    private ArrayList<SecurityScheme> securityScheme() {
+        ArrayList<SecurityScheme> securityScheme = new ArrayList<>(1);
+        securityScheme.add(new BasicAuth("basicAuth"));
+
+        return securityScheme;
+    }
+
+    @Bean
+    public Docket apiV1() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .securitySchemes(securityScheme())
+                .securityContexts(securityContext())
+                .groupName("api-1.0")
+                .select()
+                .apis(RequestHandlerSelectors
+                        .basePackage("com.yandiar.api.controller"))
+                .paths(PathSelectors.regex("/api/v1.*"))
+                .build().apiInfo(apiInfo("1.0"));
     }
 
     @Bean
     public Docket apiV2() {
-        SecurityReference securityReference = SecurityReference.builder()
-                        .reference("basicAuth")
-                        .scopes(new AuthorizationScope[0])
-                        .build();
-
-        ArrayList<SecurityReference> reference = new ArrayList<>(1);
-        reference.add(securityReference);
-
-        ArrayList<SecurityContext> securityContexts = new ArrayList<>(1);
-        securityContexts.add(SecurityContext.builder().securityReferences(reference).build());
-
-        ArrayList<SecurityScheme> auth = new ArrayList<>(1);
-        auth.add(new BasicAuth("basicAuth"));
-                
         return new Docket(DocumentationType.SWAGGER_2)
-            .securitySchemes(auth)
-            .securityContexts(securityContexts)
-            .groupName("api-2.0")
-            .select()
-            .apis(RequestHandlerSelectors
-                .basePackage("com.yandiar.api.controller"))
-            .paths(PathSelectors.regex("/api/v2.*"))
-            .build().apiInfo(apiInfoV2());
+                .securitySchemes(securityScheme())
+                .securityContexts(securityContext())
+                .groupName("api-2.0")
+                .select()
+                .apis(RequestHandlerSelectors
+                        .basePackage("com.yandiar.api.controller"))
+                .paths(PathSelectors.regex("/api/v2.*"))
+                .build().apiInfo(apiInfo("2.0"));
     }
 
-    // private Predicate<String> exceptErrorPaths() {
-    //     return not(PathSelectors.regex("/error"));
-    // }
-
-    private ApiInfo apiInfoV2() {
+    private ApiInfo apiInfo(String version) {
         return new ApiInfoBuilder().title("REST API SPRING BOOT")
                 .description("REST API SPRING BOOT")
                 .termsOfServiceUrl("iconpln.co.id")
                 .licenseUrl("iconpln.co.id")
                 .contact(new Contact("Icon Plus", "", "aaa.bbb@iconpln.co.id"))
                 .license("Icon+ License")
-                .version("2.0.0")
+                .version(version)
                 .build();
     }
 }
