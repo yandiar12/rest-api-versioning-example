@@ -1,11 +1,5 @@
 FROM eclipse-temurin:17-jdk-focal
  
+ADD target/*.jar /app/rest-api-versioning-example.jar
 WORKDIR /app
- 
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
- 
-COPY src ./src
- 
-CMD ["./mvnw", "spring-boot:run"]
+ENTRYPOINT ["java", "-jar", "rest-api-versioning-example.jar"]
